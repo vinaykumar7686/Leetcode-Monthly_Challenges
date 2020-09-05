@@ -71,4 +71,44 @@ class Solution:
                 i2 += 1
                 
         return res + lst1[i1:] + lst2[i2:]
+
+    # Memory Efficient Version
+    def getAllElements_MemoryEfficient(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+        
+        ans = []
+        
+        def trav(root):
+            
+            if not root:
+                return
+            stack = [root]
+            vals = [root.val]
+            
+            while stack:
+                temp = stack[0]
+                stack.pop(0)
+                
+                if temp.right:
+                    stack.append(temp.right)
+                    vals.insert(0, temp.right.val)
+                if temp.left:
+                    stack.append(temp.left)
+                    vals.insert(0, temp.left.val)
+            return (vals)
+                   
+        if root1:
+            ans = trav(root1)
+        if root2 and ans:
+            ans.extend(trav(root2))
+        elif root2:
+            return sorted(trav(root2))
+        
+        return sorted(ans)
+                    
+                
+                
+                
+            
+                    
+                
         
