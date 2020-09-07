@@ -24,8 +24,30 @@ Notes:
 1 <= A.length = A[0].length = B.length = B[0].length <= 30
 0 <= A[i][j], B[i][j] <= 1
 '''
-
 class Solution:
+    def largestOverlap(self, A: List[List[int]], B: List[List[int]]) -> int:
+
+        import numpy as np
+        A = np.array(A)
+        B = np.array(B)
+
+        dim = len(A)
+        # extend the matrix to a wider range for the later kernel extraction.
+        B_padded = np.pad(B, dim-1, mode='constant', constant_values=(0, 0))
+
+        max_overlaps = 0
+        for x_shift in range(dim*2 - 1):
+            for y_shift in range(dim* 2 - 1):
+                # extract a kernel from the padded matrix
+                kernel = B_padded[x_shift:x_shift+dim, y_shift:y_shift+dim]
+                # convolution between A and kernel
+                non_zeros = np.sum(A * kernel)
+                max_overlaps = max(max_overlaps, non_zeros)
+
+        return max_overlaps
+
+        
+class Solution2:
     def largestOverlap(self, a: List[List[int]], b: List[List[int]]) -> int:
         n = len(a)
         N = (3*n-2)
