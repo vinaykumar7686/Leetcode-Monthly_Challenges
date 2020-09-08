@@ -33,7 +33,7 @@ Find each path, then transform that path to an integer in base 10.
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution:
+class MySolution:
     def sumRootToLeaf(self, tree: TreeNode) -> int:
         if not tree:
             return 0
@@ -55,4 +55,25 @@ class Solution:
         for i in comb:
             ans+=int(i,2)
         return ans
+
+class IterativeSolution:
+    '''
+    Least Time
+    '''
+    def sumRootToLeaf(self, root: TreeNode) -> int:
+        root_to_leaf = 0
+        stack = [(root, 0) ]
+        
+        while stack:
+            root, curr_number = stack.pop()
+            if root is not None:
+                curr_number = (curr_number << 1) | root.val
+                # if it's a leaf, update root-to-leaf sum
+                if root.left is None and root.right is None:
+                    root_to_leaf += curr_number
+                else:
+                    stack.append((root.right, curr_number))
+                    stack.append((root.left, curr_number))
+                        
+        return root_to_leaf
         
