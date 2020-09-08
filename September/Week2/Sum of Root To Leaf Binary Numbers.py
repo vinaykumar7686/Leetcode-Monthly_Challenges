@@ -93,3 +93,74 @@ class RecursiveSolution:
         root_to_leaf = 0
         preorder(root, 0)
         return root_to_leaf
+
+'''
+Morris Preorder Traversal.
+We discussed already iterative and recursive preorder traversals, which both have great time complexity though use up to \mathcal{O}(H)O(H) to keep the stack. We could trade in performance to save space.
+
+The idea of Morris preorder traversal is simple: to use no space but to traverse the tree.
+
+How that could be even possible? At each node one has to decide where to go: to the left or to the right, traverse the left subtree or traverse the right subtree. How one could know that the left subtree is already done if no additional memory is allowed?
+
+The idea of Morris algorithm is to set the temporary link between the node and its predecessor: predecessor.right = root. So one starts from the node, computes its predecessor and verifies if the link is present.
+
+There is no link? Set it and go to the left subtree.
+
+There is a link? Break it and go to the right subtree.
+
+There is one small issue to deal with : what if there is no left child, i.e. there is no left subtree? Then go straightforward to the right subtree.
+
+Complexity Analysis
+
+Time complexity: \mathcal{O}(N)O(N), where NN is a number of nodes.
+
+Space complexity: \mathcal{O}(1)O(1).
+
+'''
+class Solution:
+    def sumRootToLeaf(self, root: TreeNode) -> int:
+        root_to_leaf = curr_number = 0
+        
+        while root:  
+            # If there is a left child,
+            # then compute the predecessor.
+            # If there is no link predecessor.right = root --> set it.
+            # If there is a link predecessor.right = root --> break it.
+            if root.left: 
+                # Predecessor node is one step to the left 
+                # and then to the right till you can.
+                predecessor = root.left 
+                steps = 1
+                while predecessor.right and predecessor.right is not root: 
+                    predecessor = predecessor.right 
+                    steps += 1
+
+                # Set link predecessor.right = root
+                # and go to explore the left subtree
+                if predecessor.right is None:
+                    curr_number = (curr_number << 1) | root.val                    
+                    predecessor.right = root  
+                    root = root.left  
+                # Break the link predecessor.right = root
+                # Once the link is broken, 
+                # it's time to change subtree and go to the right
+                else:
+                    # If you're on the leaf, update the sum
+                    if predecessor.left is None:
+                        root_to_leaf += curr_number
+                    # This part of tree is explored, backtrack
+                    for _ in range(steps):
+                        curr_number >>= 1
+                    predecessor.right = None
+                    root = root.right 
+                    
+            # If there is no left child
+            # then just go right.        
+            else: 
+                curr_number = (curr_number << 1) | root.val
+                # if you're on the leaf, update the sum
+                if root.right is None:
+                    root_to_leaf += curr_number
+                root = root.right
+                        
+        return root_to_leaf
