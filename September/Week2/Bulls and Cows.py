@@ -61,3 +61,28 @@ class Solution:
         
         
         return f"{A}A{B}B"
+
+
+    def getHint_1(self, secret: str, guess: str) -> str:
+        '''
+        By hashmap
+        '''
+        import collections
+        A = 0
+        B = 0
+        new_sec = ''
+        new_gue = ''
+        for i in range(len(guess)):
+            if guess[i] != secret[i]:
+                new_sec+=secret[i]
+                new_gue+=guess[i]
+            else:
+                A+=1
+        count_sec = collections.Counter(new_sec)
+        count_gue = collections.Counter(new_gue)
+        for k, v in count_gue.items():
+            if k in count_sec and v == count_sec[k]:
+                B+=v
+            else:
+                B+=min(v, count_sec[k])
+        return str(A)+'A'+str(B)+'B'
