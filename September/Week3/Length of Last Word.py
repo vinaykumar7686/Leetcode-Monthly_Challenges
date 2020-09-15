@@ -11,7 +11,16 @@ Example:
 
 Input: "Hello World"
 Output: 5
+
 '''
+
+class Solution0:
+    def lengthOfLastWord(self, s: str) -> int:
+        s = s.split(" ")
+        for ch in s[::-1]:
+            if len(ch)!=0:
+                return len(ch)
+        return 0
 
 class Solution:
     def lengthOfLastWord(self, s: str) -> int:
