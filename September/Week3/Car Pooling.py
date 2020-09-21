@@ -39,6 +39,30 @@ trips[i].length == 3
 Sort the pickup and dropoff events by location, then process them in order.
 
 '''
+class Solution0:
+    '''
+    Efficient approach
+    '''
+    def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
+        timestamps = []
+        for trip in trips:
+            timestamps.append([trip[1], trip[0]])
+            timestamps.append([trip[2], -trip[0]])
+            
+        timestamps.sort()
+        
+        seat_status = 0
+        
+        for timestamp in timestamps:
+            seat_status+=timestamp[1]
+            
+            if seat_status>capacity:
+                return False
+        return True
+            
+            
+
+
 
 import numpy as np
 class Solution:
