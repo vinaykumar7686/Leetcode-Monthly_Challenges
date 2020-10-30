@@ -59,3 +59,27 @@ class Solution(object):
                 ans = max(ans, min(left, right))
 
         return ans
+
+class Solution1(object):
+    def maxDistToClosest(self, seats):
+        n = len(seats)
+        
+        arr1 = [n]*n
+        arr2 = [n]*n
+        
+        for i in range(n):
+            if seats[i] == 1:
+                arr1[i], arr2[i] = 0,0
+                
+        for i in range(1,n):
+            if arr1[i] != 0:
+                arr1[i] = arr1[i-1]+1
+            
+            if arr2[-i-1] != 0:
+                arr2[-i-1] = arr2[-i]+1
+                        
+        ans = -1
+        for i,j in zip(arr1,arr2):
+            ans = max(ans, min(i,j))
+        
+        return ans
