@@ -23,7 +23,28 @@ Constraints:
 1 <= nums.length <= 8
 -10 <= nums[i] <= 10
 '''
-
+class MySolution:
+        
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        
+        ans = []
+                    
+        def permute( nums, i, n):
+            
+            if i>=n-1:
+                if nums not in ans:
+                    ans.append(nums[::1])
+                    # print(ans)
+            else:
+                
+                for j in range(i, n):
+                    nums[i], nums[j] = nums[j], nums[i]
+                    permute(nums, i+1, n)
+                    nums[i], nums[j] = nums[j], nums[i]
+        permute(nums, 0, len(nums))
+        return ans
+                    
+                
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         results = []
