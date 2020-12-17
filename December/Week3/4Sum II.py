@@ -63,3 +63,27 @@ class Solution:
                 ans = ans + dictAB[x]*dictCD[-x]
                 
         return ans
+    
+class TLE_Solution:
+    def fourSumCount(self, A: List[int], B: List[int], C: List[int], D: List[int]) -> int:
+        n = len(A)
+        
+        if n == 0:
+            return 0
+        
+        arrs = [A,B,C,D]
+        
+        
+        def helper(s, arrs):
+            if not arrs:
+                if s == 0:
+                    return 1
+                else:
+                    return 0
+            
+            ans = 0
+            for i in range(n):
+                ans += helper(s+arrs[0][i], arrs[1:])
+            return ans
+        
+        return helper(0, arrs)
