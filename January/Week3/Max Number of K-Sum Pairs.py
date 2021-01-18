@@ -38,7 +38,35 @@ For each possible value x, it can be paired up with k - x.
    Hide Hint #3  
 The number of such pairs equals to min(count(x), count(k-x)), unless that x = k / 2, where the number of such pairs will be floor(count(x) / 2).
 '''
-
+class SolutionAccepted:
+    def maxOperations(self, nums: List[int], k: int) -> int:
+        
+        hashmap = dict()
+        res = 0
+        
+        for num in nums:
+            
+            if num in hashmap:
+                hashmap[num] += 1
+            else:
+                hashmap[num] = 1
+                
+                
+        for i in hashmap.keys():
+            
+            if k-i in hashmap:
+                if i == k-i:
+                    res += hashmap[i]//2
+                    hashmap[i] = hashmap[i]&1
+                    
+                else:
+                    matched = min(hashmap[i], hashmap[k-i])
+                    hashmap[i] -= matched
+                    hashmap[k-i] -= matched
+                    res+=matched
+                    
+        return res
+                
 # ------------------------------------------------------  TLE  -------------------------------------------------------------
 class Solution:
     def maxOperations(self, nums: List[int], k: int) -> int:
@@ -78,3 +106,5 @@ class Solution:
                 hashmap[j] -=matched
                 
         return res
+
+       
