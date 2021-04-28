@@ -51,6 +51,36 @@ else
 '''
 
 class Solution:
+    def uniquePathsWithObstacles(self, arr: List[List[int]]) -> int:
+        m = len(arr)
+        n = len(arr[0])
+        
+        if arr[0][0] == 1 or arr[m-1][n-1] == 1:
+            return 0
+        
+        arr[0][0] = 1
+        
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    continue
+                    
+                if arr[i][j] == 1:
+                    arr[i][j] = 0
+                    
+                else:
+                    if i!=0:
+                        arr[i][j] = arr[i-1][j]
+                        
+                    if j!=0:
+                        arr[i][j] += arr[i][j-1] 
+                        
+                        
+        return arr[m-1][n-1]
+       
+
+# --------------------------------> TLE
+class Solution:
     def __init__(self):
         self.count = 0
     def uniquePathsWithObstacles(self, arr: List[List[int]]) -> int:
