@@ -46,6 +46,59 @@ class Solution(object):
         def is_palin(num):
             return str(num) == (str(num))[::-1]
         
+        magic = 100000
+        
+        
+        # For EVEN
+        
+        for i in range(magic):
+            
+            t = str(i)+str(i)[::-1]
+            v = int(t)**2
+            
+            if v>right:
+                break
+            
+            if v>=left and is_palin(v):
+                count+=1  
+            
+            
+        # For ODD
+        
+        for i in range(magic):
+            
+            t = str(i)+str(i)[-2::-1]
+            v = int(t)**2
+            
+            if v>right:
+                break
+            
+            if v>=left and is_palin(v):
+                count+=1    
+                    
+                    
+        return count
+                    
+
+'''
+# Solution TLE
+
+class Solution(object):
+    def superpalindromesInRange(self, left, right):
+        """
+        :type left: str
+        :type right: str
+        :rtype: int
+        """
+        
+        count = 0
+        left = int(left)
+        right = int(right)
+        
+        
+        def is_palin(num):
+            return str(num) == (str(num))[::-1]
+        
         lo = int(left**0.5)
         hi = int(right**0.5)
         
@@ -56,3 +109,4 @@ class Solution(object):
         
         return count
                     
+'''
