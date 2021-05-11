@@ -64,3 +64,25 @@ class Solution(object):
                 return 0
             
         return rec(cardPoints, 0)
+       
+
+class Solution(object):
+    def maxScore(self, nums, k):
+        """
+        :type cardPoints: List[int]
+        :type k: int
+        :rtype: int
+        """
+        
+        s = sum(nums)
+        n = len(nums)
+        
+        rem = n-k
+        
+        val = float("inf")
+        for i in range(0, n-rem+1):
+            temp = sum(nums[i:i+rem])
+            if val>temp:
+                val = temp
+                
+        return s-val
