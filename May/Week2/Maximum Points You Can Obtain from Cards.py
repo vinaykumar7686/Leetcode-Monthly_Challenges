@@ -48,8 +48,35 @@ Let the sum of all points be total_pts. You need to remove a sub-array from card
    Hide Hint #2  
 Keep a window of size n - k over the array. The answer is max(answer, total_pts - sumOfCurrentWindow)
 '''
-
 class Solution(object):
+    def maxScore(self, nums, k):
+        """
+        :type cardPoints: List[int]
+        :type k: int
+        :rtype: int
+        """
+        
+        s = sum(nums)
+        n = len(nums)
+        
+        rem = n-k
+        
+        
+        temp = sum(nums[0:0+rem])
+        val = temp
+        
+        for i in range(1, n-rem+1):
+            temp = temp-nums[i-1]+nums[i+rem-1]
+            if val>temp:
+                val = temp
+                
+        return s-val
+
+       
+'''
+# TLE Solutions
+
+class Solution0(object):
     def maxScore(self, cardPoints, k):
         """
         :type cardPoints: List[int]
@@ -66,7 +93,7 @@ class Solution(object):
         return rec(cardPoints, 0)
        
 
-class Solution(object):
+class Solution1(object):
     def maxScore(self, nums, k):
         """
         :type cardPoints: List[int]
@@ -86,3 +113,5 @@ class Solution(object):
                 val = temp
                 
         return s-val
+
+'''
