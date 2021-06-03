@@ -60,6 +60,40 @@ class Solution:
         vc.sort()
         
         res = 0
+        hdiff = 0
+        vdiff = 0
+        
+        for i in range(1, len(hc)):
+            
+            hdiff = max(hdiff, (hc[i]-hc[i-1]))
+            
+        for j in range(1, len(vc)):
+            
+            vdiff = max(vdiff, (vc[j]-vc[j-1]))
+                
+        res = (hdiff*vdiff)%(10**9 + 7)
+        
+                
+                
+        return res
+
+# TLE
+class SolutionTLE:
+    def maxArea(self, h: int, w: int, hc: List[int], vc: List[int]) -> int:
+        if not 0 in hc:
+            hc.append(0)
+        if not 0 in vc:
+            vc.append(0)
+            
+        if not h in hc:
+            hc.append(h)
+        if not w in vc:
+            vc.append(w)
+            
+        hc.sort()
+        vc.sort()
+        
+        res = 0
         
         for i in range(1, len(hc)):
             
